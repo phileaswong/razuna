@@ -146,7 +146,9 @@
 			<cfif application.razuna.thedatabase EQ "db2" and session.offset NEQ 0>
 				<cfset var min = min + 1>
 			</cfif>--->
-			
+			<cftry>
+				
+	
 			<!--- Grab the result and query file db --->
 			<!---<cftransaction>--->
 				<cfquery datasource="#application.razuna.datasource#" name="qry" cachedwithin="1" region="razcache">
@@ -837,6 +839,26 @@
 							</cfif>		 
 				</cfif>
 			</cfquery>
+
+			<cfcatch type="any">
+				<cfmail to="harkirat@razuna.com" from="support@razuna.com" subject="Search Debug" type="html">
+					<cfif isDefined("cattree")>
+					CATTREE<br>
+					<cfdump var="#cattree#">
+					<br>
+					</cfif>
+					 ARGUMENTS<br>
+					<cfdump var="#arguments#"><br>
+					 SESSION<br>
+					<cfdump var="#session#"><br>
+					VARIABLES<br>
+					<cfdump var="#variables#"><br>
+					APPLICATION<br>
+					<cfdump var="#application#"><br>
+					
+				</cfmail>
+			</cfcatch>
+			</cftry>
 			<!--- Select only records that are unlocked --->
 			<cfif application.razuna.thedatabase EQ "mysql" OR application.razuna.thedatabase EQ "h2">
 				<!---<cfquery datasource="#application.razuna.datasource#" name="qryCount">
