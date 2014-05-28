@@ -1928,7 +1928,7 @@ function removeLabel(assetID,assetType,labelID,aHrefElement){
 }
 //Check the label name, first char should be charactors or numbers
 function isValidLabel(labelName){
-	var exp = new RegExp(/^[^a-zA-Z0-9]/g);
+	var exp = new RegExp(/^[^a-zA-Z0-9\u4e00-\u9fa5]/g);
 	return !exp.test($('#'+labelName).val());
 		
 }
